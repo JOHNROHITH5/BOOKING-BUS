@@ -1,0 +1,399 @@
+#include <iostream>
+#include <string>
+using namespace std; 
+void book();
+void view(int r,int c,int t);
+void seat(int r,int c, string b[8][5]);
+void bc(int x,string b[8][5]);
+void bookc(string b[8][5]);
+void bill(int x);
+void group(string b[8][5],int x);
+
+
+void bill(int x)
+{
+    int a;
+    char c,d,e;
+    float b;
+    float s=0;
+    cout<<"\n\t\t=======BILLING=======\n"; 
+    cout<<"TICKET PRICE=$5 PER TICKET\n";
+    cout<<"50%"" DISCOUNT SENIOR CITIZENS (AGE>=60) AND PASSENGERS WITH AGE<18";
+    cout<<"\nPLEASE ENTER PASSENGERS AGE:\n";
+    for(int i=1;i<=x;i++)
+    {
+        cout<<"PASSENGER "<<i<<" AGE:";
+        cin>>a;
+        if(a>=60||a<18)
+        {
+            s=s+2.5;
+        }
+        else 
+        {
+            s=s+5;
+        }
+    }
+    cout<<"\n TOTAL TICKET PRICE: $"<<s;
+    cout<<"\n PROCEED TO PAYMENT?(Y/N):";
+    cin>>c;
+    if(c=='Y'||c=='y')
+    {
+        cout<<" MAKE PAYMENT:";
+        sy:cin>>b;
+        if(b==s)
+        {
+        cout<<"\t\t\t     PAYMENT SUCCESSFUL";
+        view (1,0,6);
+        view(10,10,0);
+        cout<<"\n\t\t=======BOOKING COMPLETED SUCCESSFULLY=======\n";
+        cout<<"\n\n\nDO YOU WANT TO CONTINUE BOOKING(Y/N):";
+        cin>>d;
+           if(d=='N'||d=='n')
+           {
+               exit(0);
+           }
+           
+        }
+        else{
+            cout<<"\nTHE ENTERED AMOUNT IS NOT CORRECT PLEASE ENTER CORRECT AMOUNT:";
+            goto sy;
+        }
+    }
+    else
+    { 
+    cout<<"\t\t      =========PAYMENT FAILED=========";
+    view(0,0,6);
+    view(10,10,0);
+    cout<<"\t\t\t=====BOOKING FAILED=====";
+    cout<<"\n DO YOU WANT TO BOOK AGAIN(Y/N):";
+    cin>>e;
+    if(e=='n'||e=='N')
+    {
+        exit(0);
+    }
+    
+}
+}
+
+
+void bookc(int f,string b[8][5])
+{  
+    if(f==1)
+{
+    for(int i=0;i<8;i++)
+    {
+        for(int j=0;j<5;j++)
+        {
+            if(b[i][j]=="[B]")
+            {
+                b[i][j]="[X]";
+    
+            }
+        }
+    }
+}
+else if(f==0)
+{
+       for(int i=0;i<8;i++)
+    {
+        for(int j=0;j<5;j++)
+        {
+            if(b[i][j]=="[B]")
+            {
+                b[i][j]="[0]";
+            }
+        }
+    }
+}
+}
+        
+
+void bc(int x,string b[8][5])
+{
+    int r,c;
+    string a,d;
+    if(x==1)
+    {
+             seat:  cout<<"ENTER ROW (1-8) AND COLUMN (1-5):";
+             cout<<"\nROW NUMBER:";
+             re:cin>>r;
+             if(r>8||r==0)
+             {
+                 cout<<"\nINVALID ROW NUMBER ENTER VALID ROW NUMBER:";
+                 goto re;
+             }
+             cout<<"COLUMN NUMBER:";
+             ree:cin>>c;
+              if(c>5||c==0)
+             {
+                 cout<<"\nINVALID COLUMN NUMBER ENTER VALID ROW NUMBER:";
+                 goto ree;
+             }
+             
+             view(r,c,3);
+             view(10,10,0);
+    cout<<"[B] INDICATES THE SEAT YOU ARE BOOKING\n";
+    cout<<"CAN I CONFIRM BOOKING(Y/N):";
+    cin>>a;
+    if(a=="y"||a=="Y")
+    {
+bill(x);
+    }
+    else
+    {
+    view(0,0,6);
+    cout<<"\n DO YOU WANT TO BOOK OTHER SEAT(Y/N):";
+    cin>>d;
+        if(d=="Y"||d=="y")
+        {
+        goto seat;
+        }
+        else
+        {
+        exit(0);
+        }
+            
+    }
+}
+else
+{
+    int r,c;
+    seats:cout<<"\nENTER ROW NUMBERS (1-8) AND COLUMN NUMBER(1-5):\n";
+             for(int i=0;i<x;i++)
+             {
+             cout<<"ROW NUMBER:";
+             ren:cin>>r;
+             if(r>8||r==0)
+             {
+                 cout<<"\nINVALID ROW NUMBER ENTER VALID ROW NUMBER:";
+                 goto ren;
+             }
+             
+             cout<<"COLUMN NUMBER:";
+             reen:cin>>c;
+              if(c>5||c==0)
+             {
+                 cout<<"\nINVALID COLUMN NUMBER ENTER VALID ROW NUMBER:";
+                 goto reen;
+             }
+             view(r,c,4);
+             }
+             view(10,10,0);
+    cout<<"[B] INDICATES THE SEAT YOU ARE BOOKING\n";
+    cout<<"CAN I CONFIRM BOOKING(Y/N):";
+    cin>>a;
+    if(a=="y"||a=="Y")
+    {
+        bill(x);
+    }
+    else
+    {
+        view(0,0,6);
+        cout<<"\n DO YOU WANT TO BOOK OTHER SEATS(Y/N):";
+        cin>>d;
+        if(d=="Y"||d=="y")
+        {
+        goto seats;
+        }
+        else
+        {
+        exit(0);
+        }
+             
+         }
+     }
+}
+
+
+void group(string b[8][5],int x)
+   { 
+       int s,g[5],c;
+       cout<<"THE ROWS THAT HAS CONSECUTIVE SEATS ARE:";   
+         cout<<"\t";
+   for(int i=0;i<8;i++)
+   {
+       s=0;
+       for(int j=0;j<5;j++)
+       {
+        if(b[i][j]=="[0]")
+        {
+            s=s+1;
+        if(s==x)
+        { 
+         cout<<i+1<<"\t";
+         
+        }
+        }
+        else{
+            s=0;
+            }
+        } 
+   }
+   }
+       
+       
+void seat(int r,int c,string b[8][5])
+{  
+    string a,d;
+    be:if(b[r-1][c-1]=="[X]"||b[r-1][c-1]=="[B]")
+{
+    cout<<"\nTHE SEAT IS ALREADY BOOKED PLEASE SELECT OTHER SEATS";
+    cout<<"\nROW NUMBER:";
+     re:cin>>r;
+             if(r>8||r==0)
+             {
+                 cout<<"\nINVALID ROW NUMBER ENTER VALID ROW NUMBER:";
+                 goto re;
+             }
+             cout<<"COLUMN NUMBER:";
+             ree:cin>>c;
+              if(c>5||c==0)
+             {
+                 cout<<"\nINVALID COLUMN NUMBER ENTER VALID COLUMN NUMBER:";
+                 goto ree;
+             }
+             goto be;
+}
+else
+{
+    b[r-1][c-1]="[B]";
+}
+}
+
+   
+void book()
+   {
+     int r,c,x;
+     char a;
+     cout<<"ENTER NUMBER OF SEATS:";
+     cin>>x;
+     if(x>1&&x<=5)
+     {
+         cout<<"DO YOU NEED A SYSTEM TO FIND CONSECUTIVE SEATS AUTOMATICALLY (Y/N)?";
+         cin>>a;
+         if(a=='Y'||a=='y')
+         {
+             view(x,0,2);
+             view(x,0,5);
+         }
+         else
+         {
+             view(x,0,5);
+             
+         }
+             
+     }
+         else if(x==1) 
+             {
+                 view(1,0,5);
+
+             }
+ else
+ {
+     cout<<"\n MAXIMUM NUMBER OF CONSECUTIVE SEATS IS 5 SO YOU WANT TO ENTER THE SEAT NUMBERS MANUALLY";
+     view(x,0,5);
+ }
+}
+
+
+ void view(int r,int c,int t)
+ {
+    static string a[8][5];
+    if(t==1)
+    {
+    for(int i=0;i<8;i++)
+    {  
+        for(int j=0;j<5;j++)
+        {
+         a[i][j]="[0]";
+        }
+    }
+}
+if(t==2&&c==0)
+{ 
+    group(a,r);
+}
+ if(t==3)
+{
+    seat(r,c,a);
+}
+ if(t==4)
+{
+     seat(r,c,a);
+}
+ if(t==5)
+{
+     bc(r,a);
+}
+ if(t==6)
+{
+     bookc(r,a);
+}
+       if(r==10&&c==10)
+       {
+           cout<<"\n\t\t\t=======BOOKING CHART=======\n"; 
+           cout<<"\t\t";
+           for(int j=0;j<5;j++)
+       {
+       cout<<"COL"<<j+1<<"\t";
+       if(j==1)
+       {
+           cout<<"\t";
+       }
+}
+cout<<"\n";
+for(int i=0;i<8;i++)
+    {
+       cout<<"ROW "<<i+1<<"\t\t"; 
+        for(int j=0;j<5;j++)
+        {
+    cout<<a[i][j]<<"\t";
+   if(j==1)
+ {
+     cout<<"\t";
+ }
+        }
+        cout<<"\n";
+    }
+       }
+       
+   }
+ 
+  
+
+
+int main()
+{ 
+    int t=0,y=0;
+    st:cout<<"\n\n=======BUS BOOKING======="<<"\n";
+    cout<<"1.VIEW BOOKING CHART\n";
+    cout<<"2.BOOK TICKETS\n";
+    cout<<"3.EXIT\n";
+    cout<<"ENTER YOUR CHOICE :";
+    int x;
+  in: cin>>x;
+    cout<<"\n";
+     y=(t>1) ?0:++t;
+    if(x==1)
+    {
+        view(10,10,y);
+            goto st;
+    }
+ else if(x==2)
+ {
+     view(10,10,y);
+     book();
+     goto st;
+}
+ else if(x==3)
+ {
+     exit(0);
+ }
+ else
+ {
+     cout<<"INVALID CHOICE\n";
+     cout<<"ENTER VALID CHOICE:";
+     goto in;
+     
+ }
+}
